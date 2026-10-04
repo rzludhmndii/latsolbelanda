@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Latihan Soal: Pranata Masyarakat Belanda — Set 2</title>
+<style>
+  :root {
+    --bg: #f3f6f6;
+    --card: #ffffff;
+    --text: #1f2a2e;
+    --text-dim: #5b6a6e;
+    --accent: #1f7a6e;
+    --accent-dim: #d2ebe6;
+    --border: #dde8e6;
+    --correct: #2f7a4f;
+    --correct-bg: #e4f3e8;
+    --wrong: #b4332a;
+    --wrong-bg: #fbe6e3;
+    --track: #e2ece9;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-sizing: border-box;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #151b1c; --card: #212b2b; --text: #e7efed; --text-dim: #9fb0ad;
+      --accent: #5fc9b7; --accent-dim: #1f3a36; --border: #2d3a3a;
+      --correct: #7fd99f; --correct-bg: #1e3327; --wrong: #f29a92; --wrong-bg: #3a2222; --track: #2a3736;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #151b1c; --card: #212b2b; --text: #e7efed; --text-dim: #9fb0ad;
+    --accent: #5fc9b7; --accent-dim: #1f3a36; --border: #2d3a3a;
+    --correct: #7fd99f; --correct-bg: #1e3327; --wrong: #f29a92; --wrong-bg: #3a2222; --track: #2a3736;
+  }
+  html, body { height: 100%; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, "Noto Sans", Arial, sans-serif;
+    display: flex; justify-content: center; min-height: 100%;
+  }
+  .wrap { width: 100%; max-width: 680px; padding: 20px 16px 40px; }
+  header.app-header { position: sticky; top: env(safe-area-inset-top, 0px); background: var(--bg); padding: 8px 0 14px; z-index: 5; }
+  h1 { font-size: 1.25rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .sub { color: var(--text-dim); font-size: 0.85rem; margin: 0 0 12px; }
+  .progress-track { height: 8px; background: var(--track); border-radius: 999px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); transition: width 0.3s ease; border-radius: 999px; }
+  .meta-row { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-dim); margin-top: 6px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 22px 20px; margin-top: 10px; }
+  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .badge { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; padding: 3px 10px; border-radius: 999px; background: var(--accent-dim); color: var(--accent); }
+  .badge.level-mudah { background: #dcefe0; color: #2f7a4f; }
+  .badge.level-sedang { background: #fdf1d8; color: #96701a; }
+  .badge.level-sulit { background: #fbe1df; color: #b4332a; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .badge.level-mudah { background: #1e3327; color: #7fd99f; }
+    :root:not([data-theme="light"]) .badge.level-sedang { background: #3a2f16; color: #e0b457; }
+    :root:not([data-theme="light"]) .badge.level-sulit { background: #3a2222; color: #f29a92; }
+  }
+  :root[data-theme="dark"] .badge.level-mudah { background: #1e3327; color: #7fd99f; }
+  :root[data-theme="dark"] .badge.level-sedang { background: #3a2f16; color: #e0b457; }
+  :root[data-theme="dark"] .badge.level-sulit { background: #3a2222; color: #f29a92; }
+  .qtext { font-size: 1.05rem; line-height: 1.5; margin: 0 0 16px; font-weight: 600; }
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .opt { text-align: left; border: 1px solid var(--border); background: var(--bg); color: var(--text); border-radius: 12px; padding: 12px 14px; font-size: 0.95rem; cursor: pointer; display: flex; gap: 10px; align-items: flex-start; transition: border-color 0.15s, background 0.15s; }
+  .opt:hover:not(:disabled) { border-color: var(--accent); }
+  .opt .letter { flex: none; width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; }
+  .opt.correct { background: var(--correct-bg); border-color: var(--correct); color: var(--correct); }
+  .opt.correct .letter { border-color: var(--correct); }
+  .opt.wrong { background: var(--wrong-bg); border-color: var(--wrong); color: var(--wrong); }
+  .opt.wrong .letter { border-color: var(--wrong); }
+  .opt:disabled { cursor: default; }
+  textarea.essay { width: 100%; min-height: 130px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); padding: 12px 14px; font-family: inherit; font-size: 0.95rem; resize: vertical; }
+  .feedback { margin-top: 14px; padding: 12px 14px; border-radius: 12px; font-size: 0.88rem; line-height: 1.5; }
+  .feedback.good { background: var(--correct-bg); color: var(--correct); }
+  .feedback.bad { background: var(--wrong-bg); color: var(--wrong); }
+  .feedback.neutral { background: var(--accent-dim); color: var(--accent); }
+  .nav-row { display: flex; justify-content: space-between; gap: 10px; margin-top: 18px; }
+  button.nav-btn { border: none; border-radius: 12px; padding: 12px 20px; font-size: 0.95rem; font-weight: 600; cursor: pointer; background: var(--accent); color: #fff; }
+  button.nav-btn.ghost { background: transparent; color: var(--text-dim); border: 1px solid var(--border); }
+  button.nav-btn:disabled { opacity: 0.4; cursor: default; }
+  .jumpbar { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+  .jumpbar button { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--text-dim); font-size: 0.75rem; cursor: pointer; }
+  .jumpbar button.current { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+  .jumpbar button.answered-correct { background: var(--correct-bg); color: var(--correct); border-color: var(--correct); }
+  .jumpbar button.answered-wrong { background: var(--wrong-bg); color: var(--wrong); border-color: var(--wrong); }
+  .jumpbar button.answered-essay { background: var(--accent-dim); color: var(--accent); border-color: var(--accent); }
+  .start-screen, .summary-screen { text-align: center; padding: 30px 8px; }
+  .start-screen p, .summary-screen p { color: var(--text-dim); line-height: 1.6; }
+  .big-score { font-size: 3rem; font-weight: 800; color: var(--accent); margin: 10px 0 0; }
+  .score-label { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 18px; }
+  .section-stats { text-align: left; margin-top: 18px; border-top: 1px solid var(--border); padding-top: 14px; }
+  .section-stats-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.88rem; border-bottom: 1px dashed var(--border); }
+  .hidden { display: none !important; }
+  footer.hint { text-align: center; color: var(--text-dim); font-size: 0.75rem; margin-top: 22px; }
+
+  /* ===== Mobile & touch ===== */
+  html { -webkit-text-size-adjust: 100%; }
+  button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; font-family: inherit; }
+  button:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .qtext, .opt > span:last-child, .feedback { min-width: 0; overflow-wrap: anywhere; }
+  .opt { min-height: 48px; align-items: center; }
+  .opt .letter { width: 26px; height: 26px; }
+  @media (hover: none) { .opt:hover:not(:disabled) { border-color: var(--border); } }
+  @media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--accent); } }
+  textarea.essay { font-size: 16px; }
+  .nav-row .nav-btn { flex: 1; min-height: 48px; }
+  #quizScreen .nav-row {
+    position: sticky; bottom: env(safe-area-inset-bottom, 0px); z-index: 4;
+    background: var(--bg); padding-block: 10px; margin-top: 8px;
+  }
+  .jumpbar { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 6px; }
+  .jumpbar button { width: 100%; height: 40px; }
+  .start-screen .nav-btn { min-height: 48px; padding-inline: 28px; }
+
+  @media (max-width: 480px) {
+    .wrap { padding: 8px 16px 24px; }
+    header.app-header { padding: 8px 0 10px; }
+    h1 { font-size: 1.05rem; line-height: 1.3; }
+    .sub { font-size: 0.8rem; margin-bottom: 10px; }
+    .card { padding: 18px 16px; border-radius: 14px; }
+    .qtext { font-size: 1rem; }
+    .opt { font-size: 0.95rem; padding: 12px; }
+    .big-score { font-size: 2.5rem; }
+    .summary-screen .nav-row { flex-direction: column; }
+    .section-stats-row { gap: 12px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="app-header">
+    <h1>📗 Latihan Soal: Pranata Masyarakat Belanda (Set 2)</h1>
+    <p class="sub">45 soal PG + 5 esai baru — berbeda dari set sebelumnya, urut mudah ke sulit</p>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="meta-row">
+      <span id="progressLabel">Soal 0 / 50</span>
+      <span id="scoreLabel">Skor PG: 0 / 0</span>
+    </div>
+  </header>
+
+  <div id="startScreen" class="card start-screen">
+    <h2>Set Latihan Kedua</h2>
+    <p>Soal-soal berikut sama sekali berbeda dari set pertama, tapi tetap diambil dari materi yang sama: Perang Delapan Puluh Tahun, Waterwerken, Sejarah Belanda, Pendidikan, Islam di Belanda, Tata Ruang &amp; Masyarakat Multikultural, serta Kebijakan Sosial &amp; Kesehatan.</p>
+    <button class="nav-btn" id="startBtn">Mulai Latihan</button>
+  </div>
+
+  <div id="quizScreen" class="hidden">
+    <div class="card" id="questionCard"></div>
+    <div class="nav-row">
+      <button class="nav-btn ghost" id="prevBtn">← Sebelumnya</button>
+      <button class="nav-btn" id="nextBtn">Berikutnya →</button>
+    </div>
+    <div class="jumpbar" id="jumpbar"></div>
+  </div>
+
+  <div id="summaryScreen" class="hidden card summary-screen">
+    <h2>Hasil Latihan</h2>
+    <div class="big-score" id="finalScore">0 / 0</div>
+    <div class="score-label">Skor Pilihan Ganda</div>
+    <div class="section-stats" id="sectionStats"></div>
+    <div class="nav-row" style="margin-top:20px;">
+      <button class="nav-btn ghost" id="reviewBtn">Tinjau Soal</button>
+      <button class="nav-btn" id="restartBtn">Ulangi dari Awal</button>
+    </div>
+  </div>
+
+  <footer class="hint">Jawaban tersimpan hanya selama sesi ini di perangkatmu.</footer>
+</div>
+
+<script>
+const questions = [
+// ===== I. Perang Delapan Puluh Tahun =====
+{section:"Perang 80 Tahun", level:"mudah", type:"mc", q:"Kaisar yang mengundurkan diri (abdikasi) dari tahta Hapsburg pada Oktober 1555 adalah...", options:["Phillip II","Charles V (Karel V)","Duke of Alba","Maurice of Nassau"], answer:1, explain:"Charles V abdikasi Oktober 1555, kekuasaan Spanyol & Belanda diwariskan ke anaknya, Phillip II."},
+{section:"Perang 80 Tahun", level:"mudah", type:"mc", q:"Lembaga perwakilan Belanda yang pertama kali dibentuk oleh Philip the Good pada 1464 disebut...", options:["Staten-Generaal","Raad van State","Unie van Utrecht","Hofstadgroep"], answer:0, explain:"Staten-Generaal (States General) dibentuk Philip the Good pada 1464."},
+{section:"Perang 80 Tahun", level:"sedang", type:"mc", q:"Compromise of Breda, yang meminta penghapusan Inkuisisi, disampaikan oleh Louis of Nassau dan Count Brederode pada...", options:["5 April 1566","18 April 1566","22 Agustus 1567","1 April 1572"], answer:0, explain:"Compromise of Breda disampaikan 5 April 1566 kepada Margaret of Parma."},
+{section:"Perang 80 Tahun", level:"sedang", type:"mc", q:'Julukan "geuzen" (beggars/pengemis) yang jadi kebanggaan pemberontak Belanda bermula dari sindiran seorang penasihat regent bernama...', options:["Berlaymont","Granvelle","Duke of Alba","Egmont"], answer:0, explain:'Berlaymont menyindir rombongan bangsawan sebagai "ces gueux" (para pengemis), lalu istilah ini dipakai bangga oleh pemberontak.'},
+{section:"Perang 80 Tahun", level:"sedang", type:"mc", q:'Peristiwa kekerasan tentara Spanyol yang tidak dibayar gaji, dikenal sebagai "Spanish Fury", terjadi di kota...', options:["Haarlem","Antwerpen","Leiden","Alkmaar"], answer:1, explain:"Spanish Fury terjadi di Antwerpen pada November 1576."},
+{section:"Perang 80 Tahun", level:"sulit", type:"mc", q:"Tujuh provinsi utara menandatangani Union of Utrecht (Januari 1579), sementara provinsi-provinsi selatan menandatangani perjanjian tandingan yang disebut...", options:["Union of Arras","Peace of Nonsuch","Pacification of Ghent","Treaty of London"], answer:0, explain:"Union of Arras (Januari 1579) ditandatangani provinsi selatan yang tetap setia pada Phillip II."},
+{section:"Perang 80 Tahun", level:"sulit", type:"mc", q:"Leiden University (1575) didirikan sebagai bentuk penghargaan atas ketahanan kota Leiden menghadapi...", options:["Pengepungan Spanyol","Wabah penyakit","Banjir besar","Kebakaran kota"], answer:0, explain:"Universitas Leiden didirikan 1575 sebagai penghargaan atas ketahanan kota menghadapi pengepungan Spanyol (1574)."},
+{section:"Perang 80 Tahun", level:"sulit", type:"mc", q:'Buku panduan latihan baris-berbaris militer "The Exercise of Armes" (1608), yang menggambarkan reformasi Maurice of Nassau, digambar oleh...', options:["Jacob De Gheyn","Hugo Grotius","Johan van Oldenbarnevelt","Walter Morgan"], answer:0, explain:"Jacob De Gheyn menggambar buku drill tersebut pada 1608."},
+
+// ===== II. Waterwerken =====
+{section:"Waterwerken", level:"mudah", type:"mc", q:"Aliran air yang mengelilingi polder untuk menjaga ketinggian air pada batas tertentu disebut...", options:["Ringvaart/boezemwater","Zeeniveau","Dijk utama","Eigen risico"], answer:0, explain:"Boezemwater/boezemkanaal/ringvaart adalah aliran air pengelilingi polder."},
+{section:"Waterwerken", level:"mudah", type:"mc", q:"Wieringermeer dan Noordoostpolder, hasil Zuiderzeewerken, terutama dimanfaatkan untuk kegiatan...", options:["Pariwisata","Pertanian","Industri berat","Perikanan laut"], answer:1, explain:"Wieringermeer dan Noordoostpolder dimanfaatkan sebagai lahan pertanian."},
+{section:"Waterwerken", level:"sedang", type:"mc", q:"Provinsi Flevoland yang resmi berdiri 1986 terdiri dari Noordoostpolder, Flevoland Timur, dan...", options:["Wieringermeer","Flevoland Selatan","Afsluitdijk","Markerwaard"], answer:1, explain:"Provinsi Flevoland terdiri dari Noordoostpolder, Flevoland Timur, dan Flevoland Selatan, ibukota Lelystad."},
+{section:"Waterwerken", level:"sedang", type:"mc", q:"Berbeda dari Wieringermeer/Noordoostpolder yang untuk pertanian, Flevoland Timur dan Selatan lebih difungsikan sebagai kawasan...", options:["Pertanian intensif","Permukiman, usaha, dan rekreasi","Cagar alam tertutup","Pangkalan militer"], answer:1, explain:"Flevoland Timur dan Selatan difungsikan untuk permukiman, usaha, dan rekreasi."},
+{section:"Waterwerken", level:"sedang", type:"mc", q:"Proyek Deltawerken menutup hampir semua teluk kecil di barat daya Belanda, KECUALI satu muara yang dibiarkan terbuka karena jalur pelayaran penting, yaitu...", options:["Oosterschelde","Westerschelde","Haringvliet","Grevelingen"], answer:1, explain:"Westerschelde dibiarkan terbuka karena merupakan jalur pelayaran penting menuju Antwerpen."},
+{section:"Waterwerken", level:"sulit", type:"mc", q:"Film dokumenter yang mengabadikan bencana banjir 1953 yang melatarbelakangi Deltawerken berjudul...", options:["Watersnood","De Nieuwe Stad","Zuiderzeewerken","Deltaplan"], answer:0, explain:'Film "Watersnood" mengabadikan bencana banjir 1 Februari 1953.'},
+{section:"Waterwerken", level:"sulit", type:"mc", q:"Film 'De nieuwe stad Almere' (1976) menggambarkan perkembangan kota baru hasil proyek...", options:["Deltawerken","Zuiderzeewerken (Flevoland)","UU Delta sungai besar","Reformasi militer Maurice of Nassau"], answer:1, explain:"Film tersebut menggambarkan kota baru Almere, bagian dari proyek Zuiderzeewerken/Flevoland."},
+
+// ===== III. Sejarah Belanda =====
+{section:"Sejarah Belanda", level:"mudah", type:"mc", q:"Perusahaan dagang Belanda yang fokus beroperasi di kawasan Atlantik (Afrika Barat & Amerika), berbeda dari VOC yang fokus ke Asia, disebut...", options:["WIC (West-Indische Compagnie)","EIC","GWC","IND"], answer:0, explain:"WIC (West-Indische Compagnie) adalah perusahaan dagang Belanda untuk kawasan Atlantik."},
+{section:"Sejarah Belanda", level:"mudah", type:"mc", q:"Pada abad ke-17, Belanda dikenal mengalami masa kejayaan ekonomi dan budaya yang biasa disebut...", options:["Dark Age","Golden Age","Iron Age","Silver Age"], answer:1, explain:"Abad ke-17 dikenal sebagai Golden Age (Zaman Keemasan) Belanda."},
+{section:"Sejarah Belanda", level:"sedang", type:"mc", q:"Selama Perang Dunia II, Belanda kehilangan lebih dari 100.000 jiwa dari kalangan komunitas...", options:["Petani","Yahudi-Belanda","Nelayan","Pedagang VOC"], answer:1, explain:"Lebih dari 100.000 Yahudi-Belanda dibunuh selama pendudukan Nazi."},
+{section:"Sejarah Belanda", level:"sedang", type:"mc", q:"Belanda termasuk salah satu negara perintis pembentukan Uni Eropa, yang secara resmi dibentuk pada tahun...", options:["1957","1975","1992","2002"], answer:2, explain:"Uni Eropa resmi dibentuk tahun 1992 (Perjanjian Maastricht)."},
+{section:"Sejarah Belanda", level:"sulit", type:"mc", q:"Benelux adalah persatuan ekonomi pasca Perang Dunia II antara Belanda, Belgia, dan...", options:["Prancis","Luksemburg","Jerman","Denmark"], answer:1, explain:"Benelux = Belgia, Nederland (Belanda), Luksemburg."},
+{section:"Sejarah Belanda", level:"sulit", type:"mc", q:"Setelah Ratu Wilhelmina, takhta Belanda diteruskan kepada putrinya yang bernama...", options:["Ratu Beatrix","Ratu Juliana","Ratu Emma","Ratu Maxima"], answer:1, explain:"Ratu Juliana meneruskan takhta setelah Ratu Wilhelmina turun takhta."},
+
+// ===== IV. Pendidikan di Belanda =====
+{section:"Pendidikan", level:"mudah", type:"mc", q:"Perjuangan panjang antar kelompok agama dan sekuler terkait pendanaan sekolah di Belanda (1848–1917) dikenal dengan istilah...", options:["School strijd","Beeldenstorm","Wajib belajar","Kaffah onderwijs"], answer:0, explain:"School strijd adalah perjuangan/perdebatan panjang soal pendanaan sekolah agama vs negeri."},
+{section:"Pendidikan", level:"mudah", type:"mc", q:"Sejak tahun 1917, sekolah dasar di Belanda mulai mendapatkan...", options:["Subsidi pemerintah","Larangan beroperasi","Kurikulum militer","Status universitas"], answer:0, explain:"Tahun 1917 menandai sekolah dasar mulai mendapat subsidi pemerintah, hasil dari School strijd."},
+{section:"Pendidikan", level:"sedang", type:"mc", q:"Berdasarkan UU 1969, anak usia 6 hingga 16 tahun di Belanda diwajibkan mengikuti pendidikan, minimal secara...", options:["Penuh waktu saja","Paruh waktu","Daring saja","Privat di rumah"], answer:1, explain:"UU 1969 mewajibkan anak usia 6–16 tahun mengikuti pendidikan, minimal paruh waktu."},
+{section:"Pendidikan", level:"sedang", type:"mc", q:"Dalam sistem basisschool, grup 1 (kelas pertama) diikuti oleh anak berusia...", options:["4 tahun","6 tahun","8 tahun","12 tahun"], answer:0, explain:"Grup 1 basisschool diikuti anak usia 4 tahun."},
+{section:"Pendidikan", level:"sedang", type:"mc", q:"Lulusan VMBO yang ingin melanjutkan pendidikan kejuruan tingkat lanjut biasanya melanjutkan ke jenjang...", options:["WO","HBO","MBO","Gymnasium"], answer:2, explain:"MBO adalah kelanjutan pendidikan kejuruan dari VMBO."},
+{section:"Pendidikan", level:"sulit", type:"mc", q:"UU tahun 1984 di Belanda menegaskan prinsip tentang...", options:["Wajib militer bagi pelajar","Kebebasan memberikan pengajaran","Penghapusan sekolah agama","Penggabungan HBO dan WO"], answer:1, explain:"UU 1984 menegaskan prinsip kebebasan memberikan pengajaran (vrijheid van onderwijs)."},
+
+// ===== V. Islam di Belanda =====
+{section:"Islam di Belanda", level:"mudah", type:"mc", q:"Berdasarkan data Religie in Nederland 2008, kelompok terbesar penduduk Belanda justru tercatat sebagai...", options:["Katolik","Protestan","Tanpa agama (48,4%)","Muslim"], answer:2, explain:"Kelompok tanpa agama tercatat 48,4%, kelompok terbesar dibanding agama manapun."},
+{section:"Islam di Belanda", level:"mudah", type:"mc", q:"Tokoh yang dikenal luas karena partainya (PVV) bersikap keras terhadap Islam di Belanda adalah...", options:["Geert Wilders","Paul Scheffer","Frits Bolkestein","Pim Fortuyn"], answer:0, explain:"Geert Wilders mendirikan dan memimpin partai PVV (Partij voor de Vrijheid)."},
+{section:"Islam di Belanda", level:"sedang", type:"mc", q:"Fatwa yang dikeluarkan Ayatollah Khomeini terhadap penulis Salman Rushdie pada 1989 turut memicu ketegangan terkait isu...", options:["Imigrasi ekonomi","Kebebasan berekspresi vs sensitivitas agama","Reformasi pendidikan","Kebijakan tata ruang"], answer:1, explain:"Fatwa 1989 memicu perdebatan global tentang kebebasan berekspresi vs sensitivitas keagamaan."},
+{section:"Islam di Belanda", level:"sedang", type:"mc", q:"Politisi dari partai VVD yang pada awal 1990-an mengangkat isu kegagalan integrasi imigran Muslim adalah...", options:["Frits Bolkestein","Geert Wilders","Mohammed Bouyeri","Samir Azzouz"], answer:0, explain:"Frits Bolkestein (VVD) mengangkat isu ini pada 1992."},
+{section:"Islam di Belanda", level:"sulit", type:"mc", q:"Samir Azzouz dipenjara pada tahun 2006 terkait kasus...", options:["Korupsi","Terorisme","Penipuan pajak","Pelanggaran tata ruang"], answer:1, explain:"Samir Azzouz dipenjara 2006 terkait kasus terorisme."},
+{section:"Islam di Belanda", level:"sulit", type:"mc", q:"Perdebatan tentang penggunaan jilbab di tempat kerja di Belanda mulai mengemuka pada tahun...", options:["1989","1992","1995","2004"], answer:2, explain:"Isu jilbab di tempat kerja mulai mengemuka pada 1995."},
+
+// ===== VI. Tata Ruang & Multikultural =====
+{section:"Tata Ruang & Multikultural", level:"mudah", type:"mc", q:"Jenis rumah bertingkat 2–3 lantai yang umum ditemukan di kota seperti Utrecht disebut...", options:["Woonboot","Rumah Deretan","Apartemen mewah","Vila"], answer:1, explain:"Rumah Deretan (2–3 tingkat) umum ditemukan di Utrecht."},
+{section:"Tata Ruang & Multikultural", level:"mudah", type:"mc", q:"Dewan yang memberikan masukan terkait bangunan monumen kepada kementerian WVC disebut...", options:["Monumenteraad","Staatsbosbeheer","IND","CBS"], answer:0, explain:"Monumenteraad memberi advis ke WVC (Welzijn, Volksgezondheid en Cultuur)."},
+{section:"Tata Ruang & Multikultural", level:"sedang", type:"mc", q:"Menurut materi, jumlah bangunan yang dilindungi sebagai monumen di Belanda mencapai sekitar...", options:["4.000","40.000","150.000","400.000"], answer:1, explain:"Sekitar 40.000 bangunan dilindungi sebagai monumen, dan 150 kota/desa dilindungi."},
+{section:"Tata Ruang & Multikultural", level:"sedang", type:"mc", q:"Database yang mencatat data pribadi penduduk di tingkat kota di Belanda, berdasarkan Pasal 26, disingkat...", options:["GBA","CBS","IND","VROM"], answer:0, explain:"GBA (Gemeentelijke Basisadministratie) adalah database catatan pribadi kota."},
+{section:"Tata Ruang & Multikultural", level:"sulit", type:"mc", q:"Situs alam terbesar yang dikelola Staatsbosbeheer bernama...", options:["Fort Ellewoutsdijk","De Wierden","Flevoland","Waddenzee"], answer:1, explain:"De Wierden adalah situs terbesar yang dikelola Staatsbosbeheer; Fort Ellewoutsdijk adalah situs terkecil."},
+{section:"Tata Ruang & Multikultural", level:"sulit", type:"mc", q:"Gelombang imigrasi ke Belanda pada abad ke-17, selain terkait perdagangan VOC, juga didorong oleh kedatangan...", options:["Pengungsi agama (mis. Huguenot dan Yahudi Eropa Timur)","Buruh migran Turki","Pelajar internasional","Pengungsi perang dunia"], answer:0, explain:"Abad 17–18 Belanda menerima pengungsi agama seperti Huguenot dan Yahudi Eropa Timur."},
+
+// ===== VII. Kebijakan Sosial, Kesejahteraan, Kesehatan =====
+{section:"Kebijakan Sosial", level:"mudah", type:"mc", q:"Kelompok usia yang dibebaskan dari kewajiban membayar premi basisverzekering (asuransi dasar) adalah...", options:["Lansia di atas 65 tahun","Remaja di bawah 18 tahun","Pekerja migran","Wiraswasta"], answer:1, explain:"Remaja di bawah 18 tahun tidak membayar premi basisverzekering."},
+{section:"Kebijakan Sosial", level:"sedang", type:"mc", q:"Asuransi tambahan yang sifatnya tidak wajib dan menjadi pelengkap basisverzekering disebut...", options:["Aanvullende verzekering","Eigen risico verzekering","AOW","Bijstand"], answer:0, explain:"Aanvullende verzekering adalah asuransi tambahan yang sifatnya opsional."},
+{section:"Kebijakan Sosial", level:"sedang", type:"mc", q:"Lembaga yang menangani kasus penunggak premi asuransi kesehatan (wanbetalers) dan orang yang tidak berasuransi di Belanda adalah...", options:["Zorginstituut Nederland","VROM","IND","Staatsbosbeheer"], answer:0, explain:"Zorginstituut Nederland menangani wanbetalers en onverzekerden."},
+{section:"Kebijakan Sosial", level:"sedang", type:"mc", q:"Besaran bijstand (bantuan sosial) di Belanda dibedakan levelnya berdasarkan status, KECUALI...", options:["Pasangan","Lajang","Orang tua tunggal","Usia pensiun di atas 80 tahun"], answer:3, explain:"Bijstand dibedakan untuk pasangan, lajang, dan orang tua tunggal — bukan berdasarkan usia di atas 80 tahun."},
+{section:"Kebijakan Sosial", level:"sulit", type:"mc", q:"Upah minimum (minimumloon) bagi pekerja dewasa di Belanda per 1 Januari 2014 tercatat sebesar...", options:["€985,60/bulan","€1.485,60/bulan","€1.985,60/bulan","€2.485,60/bulan"], answer:1, explain:"Minimumloon per 1 Januari 2014 adalah €1.485,60/bulan untuk pekerja dewasa."},
+
+// ===== Esai =====
+{section:"Esai", level:"esai", type:"essay", q:"Bandingkan peran William of Orange dan Duke of Alba dalam jalannya Perang Delapan Puluh Tahun — jelaskan bagaimana kebijakan masing-masing tokoh memengaruhi arah pemberontakan Belanda!", keypoints:["William of Orange: pemimpin pemberontakan, diplomat, berupaya membangun koalisi lintas provinsi dan agama, menjadi simbol persatuan","Duke of Alba: dikirim Phillip II untuk menindas pemberontakan, mendirikan Council of Troubles (Bloedraad), menerapkan pajak berat (Tenth Penny), yang justru memicu kebencian rakyat dan memperkuat pemberontakan","Kontras kebijakan: represi keras Alba mempercepat radikalisasi rakyat, sementara pendekatan politik Orange membangun basis dukungan jangka panjang"]},
+{section:"Esai", level:"esai", type:"essay", q:"Jelaskan bagaimana sistem polder dan boezemwater bekerja untuk mengatur ketinggian air di wilayah Belanda yang berada di bawah permukaan laut!", keypoints:["Polder adalah wilayah rendah yang dikelilingi tanggul/air","Boezemwater/ringvaart mengelilingi polder dan menampung kelebihan air yang dipompa keluar dari polder","Air dari boezem dialirkan ke laut/sungai; saat musim kemarau air dari boezem bisa dialirkan balik ke polder agar lahan tidak kekurangan air","Sistem ini memungkinkan lahan di bawah permukaan laut tetap bisa dihuni dan digunakan untuk pertanian"]},
+{section:"Esai", level:"esai", type:"essay", q:"Jelaskan hubungan antara perkembangan sistem pendidikan Belanda (dari School strijd hingga UU 1984) dengan nilai kebebasan yang dijunjung masyarakat Belanda!", keypoints:["School strijd (1848–1917): perjuangan panjang agar sekolah berbasis agama juga mendapat pendanaan setara dengan sekolah negeri","1917: sekolah dasar mulai mendapat subsidi pemerintah, hasil kompromi politik","UU 1984: menegaskan kebebasan memberikan pengajaran (vrijheid van onderwijs), masyarakat bebas mendirikan sekolah sesuai keyakinan/metode mereka","Menunjukkan nilai pluralisme & kebebasan beragama/berpendapat yang dijunjung tinggi dalam sistem Belanda"]},
+{section:"Esai", level:"esai", type:"essay", q:"Diskusikan bagaimana kebijakan imigrasi Belanda (IND, klasifikasi Barat/Non-Barat) berkaitan dengan dinamika integrasi komunitas Muslim di negara tersebut!", keypoints:["IND mengatur kebijakan imigrasi & naturalisasi; CBS mengklasifikasikan imigran Barat vs Non-Barat (banyak imigran Muslim dari Turki/Maroko masuk kategori Non-Barat)","Klasifikasi ini memengaruhi kebijakan integrasi & statistik sosial yang kerap dikaitkan dengan isu kegagalan integrasi (lih. Paul Scheffer)","Dinamika ini berkelindan dengan peristiwa kekerasan (Fortuyn, van Gogh) dan sikap politik (Bolkestein, Wilders) yang memperkeras wacana publik terhadap Islam"]},
+{section:"Esai", level:"esai", type:"essay", q:"Jelaskan bagaimana sistem Verzekering di Belanda (Basisverzekering, Aanvullende, Eigen risico, dan penanganan wanbetalers) saling melengkapi untuk menjamin akses kesehatan warga!", keypoints:["Basisverzekering: asuransi dasar wajib, mencakup layanan esensial (dokter umum, RS, apotik); remaja <18 tahun bebas premi","Aanvullende verzekering: asuransi tambahan opsional untuk layanan di luar cakupan dasar","Eigen risico verzekering: risiko wajib pribadi (contoh €360 di 2014, €375 di 2015) yang harus dibayar sendiri sebelum asuransi menanggung biaya lebih lanjut","Wanbetalers en onverzekerden: mekanisme khusus (ditangani Zorginstituut Nederland) bagi yang menunggak premi atau tidak berasuransi, agar tetap ada jaring pengaman"]},
+];
+
+let current = 0;
+let answered = new Array(questions.length).fill(null);
+let mcCorrectCount = 0;
+let mcTotal = questions.filter(q=>q.type==='mc').length;
+
+const startScreen = document.getElementById('startScreen');
+const quizScreen = document.getElementById('quizScreen');
+const summaryScreen = document.getElementById('summaryScreen');
+const questionCard = document.getElementById('questionCard');
+const progressFill = document.getElementById('progressFill');
+const progressLabel = document.getElementById('progressLabel');
+const scoreLabel = document.getElementById('scoreLabel');
+const jumpbar = document.getElementById('jumpbar');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+document.getElementById('startBtn').addEventListener('click', () => {
+  startScreen.classList.add('hidden');
+  quizScreen.classList.remove('hidden');
+  buildJumpbar();
+  renderQuestion();
+});
+document.getElementById('restartBtn').addEventListener('click', () => {
+  current = 0;
+  answered = new Array(questions.length).fill(null);
+  mcCorrectCount = 0;
+  summaryScreen.classList.add('hidden');
+  quizScreen.classList.remove('hidden');
+  buildJumpbar();
+  renderQuestion();
+});
+document.getElementById('reviewBtn').addEventListener('click', () => {
+  current = 0;
+  summaryScreen.classList.add('hidden');
+  quizScreen.classList.remove('hidden');
+  renderQuestion();
+});
+function scrollToTop(){ window.scrollTo({ top: 0, behavior: 'smooth' }); }
+function goPrev(){ if (current > 0) { current--; renderQuestion(); scrollToTop(); } }
+function goNext(){
+  if (current < questions.length - 1) { current++; renderQuestion(); }
+  else { showSummary(); }
+  scrollToTop();
+}
+prevBtn.addEventListener('click', goPrev);
+nextBtn.addEventListener('click', goNext);
+
+// Geser kiri/kanan di kartu soal untuk pindah soal (HP)
+let touchX = null, touchY = null;
+questionCard.addEventListener('touchstart', e => {
+  touchX = e.touches[0].clientX; touchY = e.touches[0].clientY;
+}, { passive: true });
+questionCard.addEventListener('touchend', e => {
+  if (touchX === null || e.target.tagName === 'TEXTAREA') { touchX = null; return; }
+  const dx = e.changedTouches[0].clientX - touchX;
+  const dy = e.changedTouches[0].clientY - touchY;
+  touchX = null;
+  if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+    if (dx < 0 && current < questions.length - 1) goNext();
+    else if (dx > 0) goPrev();
+  }
+});
+
+function buildJumpbar(){
+  jumpbar.innerHTML = '';
+  questions.forEach((q, i) => {
+    const b = document.createElement('button');
+    b.textContent = (i+1);
+    b.title = q.section;
+    b.addEventListener('click', () => { current = i; renderQuestion(); scrollToTop(); });
+    jumpbar.appendChild(b);
+  });
+  refreshJumpbar();
+}
+function refreshJumpbar(){
+  const btns = jumpbar.children;
+  for (let i=0;i<btns.length;i++){
+    btns[i].classList.remove('current','answered-correct','answered-wrong','answered-essay');
+    if (i===current) btns[i].classList.add('current');
+    const q = questions[i];
+    if (q.type==='mc' && answered[i] !== null){
+      btns[i].classList.add(answered[i]===q.answer ? 'answered-correct' : 'answered-wrong');
+    } else if (q.type==='essay' && answered[i]){
+      btns[i].classList.add('answered-essay');
+    }
+  }
+}
+function updateProgress(){
+  const answeredCount = answered.filter(a => a !== null).length;
+  const pct = Math.round((answeredCount / questions.length) * 100);
+  progressFill.style.width = pct + '%';
+  progressLabel.textContent = `Soal ${current+1} / ${questions.length}`;
+  scoreLabel.textContent = `Skor PG: ${mcCorrectCount} / ${mcTotal}`;
+}
+function letterFor(i){ return String.fromCharCode(65+i); }
+
+function renderQuestion(){
+  const q = questions[current];
+  questionCard.innerHTML = '';
+  const badgeRow = document.createElement('div');
+  badgeRow.className = 'badge-row';
+  const topicBadge = document.createElement('span');
+  topicBadge.className = 'badge';
+  topicBadge.textContent = q.section;
+  badgeRow.appendChild(topicBadge);
+  const levelBadge = document.createElement('span');
+  levelBadge.className = 'badge level-' + (q.level === 'esai' ? 'sedang' : q.level);
+  levelBadge.textContent = q.level === 'esai' ? 'ESAI' : q.level.toUpperCase();
+  badgeRow.appendChild(levelBadge);
+  questionCard.appendChild(badgeRow);
+
+  const qtext = document.createElement('p');
+  qtext.className = 'qtext';
+  qtext.textContent = `${current+1}. ${q.q}`;
+  questionCard.appendChild(qtext);
+
+  if (q.type === 'mc'){
+    const optsWrap = document.createElement('div');
+    optsWrap.className = 'options';
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt';
+      btn.innerHTML = `<span class="letter">${letterFor(i)}</span><span>${opt}</span>`;
+      if (answered[current] !== null){
+        btn.disabled = true;
+        if (i === q.answer) btn.classList.add('correct');
+        else if (i === answered[current]) btn.classList.add('wrong');
+      }
+      btn.addEventListener('click', () => {
+        if (answered[current] !== null) return;
+        answered[current] = i;
+        if (i === q.answer) mcCorrectCount++;
+        refreshJumpbar();
+        updateProgress();
+        renderQuestion();
+      });
+      optsWrap.appendChild(btn);
+    });
+    questionCard.appendChild(optsWrap);
+
+    if (answered[current] !== null){
+      const fb = document.createElement('div');
+      const correct = answered[current] === q.answer;
+      fb.className = 'feedback ' + (correct ? 'good' : 'bad');
+      fb.textContent = (correct ? '✅ Benar! ' : '❌ Kurang tepat. ') + q.explain;
+      questionCard.appendChild(fb);
+    }
+  } else {
+    const ta = document.createElement('textarea');
+    ta.className = 'essay';
+    ta.placeholder = 'Tulis jawabanmu di sini...';
+    ta.value = (typeof answered[current] === 'string') ? answered[current] : '';
+    ta.addEventListener('input', () => { answered[current] = ta.value; });
+    questionCard.appendChild(ta);
+
+    const checkBtn = document.createElement('button');
+    checkBtn.className = 'nav-btn ghost';
+    checkBtn.style.marginTop = '12px';
+    checkBtn.textContent = 'Lihat Poin Kunci Jawaban';
+    checkBtn.addEventListener('click', () => {
+      if (!answered[current]) answered[current] = true;
+      refreshJumpbar();
+      updateProgress();
+      const existing = questionCard.querySelector('.feedback');
+      if (existing) existing.remove();
+      const fb = document.createElement('div');
+      fb.className = 'feedback neutral';
+      fb.innerHTML = '<strong>Poin-poin yang sebaiknya tercakup:</strong><ul style="margin:8px 0 0;padding-left:18px;">' +
+        q.keypoints.map(k => `<li>${k}</li>`).join('') + '</ul>';
+      questionCard.appendChild(fb);
+    });
+    questionCard.appendChild(checkBtn);
+  }
+
+  prevBtn.disabled = current === 0;
+  nextBtn.textContent = current === questions.length - 1 ? 'Lihat Hasil' : 'Berikutnya →';
+  updateProgress();
+  refreshJumpbar();
+}
+
+function showSummary(){
+  quizScreen.classList.add('hidden');
+  summaryScreen.classList.remove('hidden');
+  document.getElementById('finalScore').textContent = `${mcCorrectCount} / ${mcTotal}`;
+  const sections = {};
+  questions.forEach((q, i) => {
+    if (q.type !== 'mc') return;
+    if (!sections[q.section]) sections[q.section] = {correct:0, total:0};
+    sections[q.section].total++;
+    if (answered[i] === q.answer) sections[q.section].correct++;
+  });
+  const statsDiv = document.getElementById('sectionStats');
+  statsDiv.innerHTML = '';
+  Object.keys(sections).forEach(sec => {
+    const row = document.createElement('div');
+    row.className = 'section-stats-row';
+    row.innerHTML = `<span>${sec}</span><span>${sections[sec].correct} / ${sections[sec].total}</span>`;
+    statsDiv.appendChild(row);
+  });
+}
+</script>
+</body>
+</html>
